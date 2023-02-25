@@ -77,25 +77,27 @@ class Z7_Matrix:
 
 
     def determinant(self) -> Z7_num:
-        pass
-
-    def determinant(self) -> Z7_num:
-        det = 0
+        det = Z7_num(0)
         for start in range(self.size):
+            mult = Z7_num(1)
             for i in range(self.size):
-                det += self.value[i][(start + i) % self.size]
+                mult *= self.value[i][(start + i) % self.size]
+            det += mult
+                # print(f"elem = {self.value[i][(start + i) % self.size]}")
+                # print(f'det = {det}')
+        # print("---------------------")
         for start in range(self.size):
-            for i in range(self.size, 0, -1):
-                det -= self.value[self.size - 1 - i][(start + i) % self.size]
+            mult = Z7_num(1)
+            for i in range(self.size):
+                mult *= self.value[self.size - 1 - i][(start + i) % self.size]
+            det -= mult
+                # print(f"elem = {self.value[self.size - 1 - i][(start + i) % self.size]}")
+                # print(f"det = {det}")
         return det
 
 
 
 if __name__ == "__main__":
-    A = Z7_Matrix(3, [1, 2, 3], [4, 5, 6], [7, 8, 9])
-    A.elementary_transformation_1(1, 2)
-    B = A
-    B.transpose()
-    print(B)
-    print()
-    print(A)
+    print(Z7_num(-1038))
+    A = Z7_Matrix(3, [1, 2, 3], [4, 5, 6], [356, 8, 6])
+    print(A.determinant())
