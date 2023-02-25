@@ -5,7 +5,7 @@ class Z7_num:
             self.value = num % 7
         else: 
             self.value = 7 - ((-num) % 7)
-    
+
     def __str__(self) -> str:
         return str(self.value)
     
@@ -16,13 +16,23 @@ class Z7_num:
         return Z7_num(self.value * other.value)
     
     def __div__(self, other):
+        if other == 0:
+            raise ZeroDivisionError
+
         one = Z7_num(1)
+        opposite_to_other = Z7_num(1)
 
         for i in range(1, 7):
-            if Z7_num(i) * other == one:
+            z7_i = Z7_num(i)
+            if z7_i * other == one:
                 opposite_to_other = Z7_num(i)
+                break
                 
         return self * opposite_to_other
+
+    
+    def __truediv__(self, other):
+        return Z7_num.__div__(self, other)
     
     def __sub__(self, other):
         return Z7_num(self.value - other.value)
@@ -35,6 +45,11 @@ class Z7_num:
     
     def __cmp__(self, other):
         return self.value - other.value
+    
+    def __eq__(self, other) -> bool:
+        if type(other) is int:
+            return self.value == other
+        return self.value == other.value
 
 
 class Z7_Matrix:
@@ -56,7 +71,7 @@ class Z7_Matrix:
         return_string = ""
         for i in range(self.size):
             for j in range(self.size):
-                return_string += Z7_num.__str__(self.value[i][j])
+                return_string += str(self.value[i][j])
                 return_string += " "
             return_string += "\n"
         return return_string[:-1]
@@ -120,11 +135,12 @@ class Z7_Matrix:
     
     
     def superdiegonolise(self):
-        pass
-
+        for i in range(0, self.size):
+            
 
 
 if __name__ == "__main__":
-    A = Z7_Matrix(3, [[1, 2, 3], [4, 5, 6], [7, 8, 1]])
+    A = Z7_Matrix(3, [[0, 0, 3], [0, 5, 6], [7, 8, 9]])
+    A.superdiegonolise()
     print(A)
 
