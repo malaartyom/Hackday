@@ -45,7 +45,17 @@ class Z7_Matrix:
                 return_string += " "
             return_string += "\n"
         return return_string[:-1]
-        
+
+
+    def copy(self):
+        # This function make deep copy of matrix
+        copied = Z7_Matrix(self.size)
+        for i in range(self.size):
+            for j in range(self.size):
+                copied.value[i][j] = Z7_num(int(self.value[i][j]))
+
+        return copied
+
 
     def elementary_transformation_3(self, first_line_number: int, const: Z7_num, second_line_number: int):
         # This function make elementary transformation: add first line multiplied by const to second line
@@ -69,15 +79,12 @@ class Z7_Matrix:
     def transpose(self):
         # This function transpose the matrix
 
-        temp = self
+        temp = self.copy()
         
         for i in range(self.size):
             for j in range(self.size):
                 self.value[i][j] = temp.value[j][i]
 
-
-    def determinant(self) -> Z7_num:
-        pass
 
     def determinant(self) -> Z7_num:
         det = 0
@@ -94,7 +101,7 @@ class Z7_Matrix:
 if __name__ == "__main__":
     A = Z7_Matrix(3, [1, 2, 3], [4, 5, 6], [7, 8, 9])
     A.elementary_transformation_1(1, 2)
-    B = A
+    B = A.copy()
     B.transpose()
     print(B)
     print()
