@@ -41,8 +41,19 @@ class Z7_Matrix:
                 return_string += " "
             return_string += "\n"
         return return_string[:-1]
+    
+    def determinant(self) -> Z7_num:
+        det = 0
+        for start in range(self.size):
+            for i in range(self.size):
+                det += self.value[i][(start + i) % self.size]
+        for start in range(self.size):
+            for i in range(self.size, 0, -1):
+                det -= self.value[self.size - 1 - i][(start + i) % self.size]
+        return det
+
 
 
 if __name__ == "__main__":
-    A = Z7_Matrix(3)
+    A = Z7_Matrix(3, [1, 2, 3], [4, 5, 6], [7, 8, 9])
     print(A)
