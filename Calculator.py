@@ -19,3 +19,5 @@ class Z7_num:
     
     def __neg__(self):
         return Z7_num(-self.value)
+    
+
