@@ -61,6 +61,15 @@ class Z7_Matrix:
             return_string += "\n"
         return return_string[:-1]
 
+    def __mul__(self, other):
+        matr = Z7_Matrix(self.size)
+        for i in range(self.size):
+            for j in range(self.size):
+                summ = Z7_num(0)
+                for k in range(self.size):
+                    summ += self.value[i][k] * other.value[k][j]
+                matr.value[i][j] = summ
+        return matr
 
     def copy(self):
         # This function make deep copy of matrix
@@ -126,5 +135,6 @@ class Z7_Matrix:
 
 if __name__ == "__main__":
     A = Z7_Matrix(3, [[1, 2, 3], [4, 5, 6], [7, 8, 1]])
-    print(A)
+    B = Z7_Matrix(3, [[1, 0, 0], [0, 1 ,0], [0, 0 ,1]])
+    print(A * B)
 

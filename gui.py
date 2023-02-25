@@ -3,8 +3,6 @@ import sys
 import os
 from typing import TextIO
 from pathlib import Path
-import math
-import re
 from Calculator import *
 
 VALUES = dict()
