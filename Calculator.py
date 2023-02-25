@@ -20,6 +20,9 @@ class Z7_num:
     
     def __neg__(self):
         return Z7_num(-self.value)
+    
+    def __int__(self):
+        return self.value
 
 
 class Z7_Matrix:
@@ -31,8 +34,9 @@ class Z7_Matrix:
         if args:
             for i in range(self.size):
                 for j in range(self.size):
-                    self.value[i][j] = args[i][j]
+                    self.value[i][j] = Z7_num(args[i][j])
     
+
     def __str__(self) -> str:
         return_string = ""
         for i in range(self.size):
@@ -41,8 +45,46 @@ class Z7_Matrix:
                 return_string += " "
             return_string += "\n"
         return return_string[:-1]
+    
+
+    def elementary_transformation_3(self, first_line_number: int, const: Z7_num, second_line_number: int):
+        # This function make elementary transformation: add first line multiplied by const to second line
+
+        first_line_number -= 1
+        second_line_number -= 1
+
+        for i in range(self.size):
+            self.value[second_line_number][i] = self.value[first_line_number][i] * const + self.value[second_line_number][i]
+
+
+    def elementary_transformation_1(self, first_line_number: int, second_line_number: int):
+        # This function rearranges first line and second line
+
+        first_line_number -= 1
+        second_line_number -= 1
+
+        self.value[second_line_number], self.value[first_line_number] = self.value[first_line_number], self.value[second_line_number]
+    
+    
+    def transpose(self):
+        # This function transpose the matrix
+
+        temp = self
+        
+        for i in range(self.size):
+            for j in range(self.size):
+                self.value[i][j] = temp.value[j][i]
+
+
+    def determinant(self) -> Z7_num:
+        pass
 
 
 if __name__ == "__main__":
-    A = Z7_Matrix(3)
+    A = Z7_Matrix(3, [1, 2, 3], [4, 5, 6], [7, 8, 9])
+    A.elementary_transformation_1(1, 2)
+    B = A
+    B.transpose()
+    print(B)
+    print()
     print(A)
