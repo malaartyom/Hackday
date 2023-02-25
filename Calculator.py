@@ -15,6 +15,15 @@ class Z7_num:
     def __mul__(self, other):
         return Z7_num(self.value * other.value)
     
+    def __div__(self, other):
+        one = Z7_num(1)
+
+        for i in range(1, 7):
+            if Z7_num(i) * other == one:
+                opposite_to_other = Z7_num(i)
+                
+        return self * opposite_to_other
+    
     def __sub__(self, other):
         return Z7_num(self.value - other.value)
     
@@ -23,6 +32,9 @@ class Z7_num:
     
     def __int__(self):
         return self.value
+    
+    def __cmp__(self, other):
+        return self.value - other.value
 
 
 class Z7_Matrix:
@@ -30,6 +42,9 @@ class Z7_Matrix:
     def __init__(self, num, *args):
         self.size = num
         self.value = [[Z7_num(0) for i in range(num)] for j in range(num)]
+        
+        if len(args) == 1:
+            args = args[0]
 
         if args:
             for i in range(self.size):
@@ -87,31 +102,31 @@ class Z7_Matrix:
 
 
     def determinant(self) -> Z7_num:
+        # This function calculate determinant of the matrix
+        
         det = Z7_num(0)
+
         for start in range(self.size):
             mult = Z7_num(1)
             for i in range(self.size):
                 mult *= self.value[i][(start + i) % self.size]
             det += mult
-                # print(f"elem = {self.value[i][(start + i) % self.size]}")
-                # print(f'det = {det}')
-        # print("---------------------")
+
         for start in range(self.size):
             mult = Z7_num(1)
             for i in range(self.size):
                 mult *= self.value[self.size - 1 - i][(start + i) % self.size]
             det -= mult
-                # print(f"elem = {self.value[self.size - 1 - i][(start + i) % self.size]}")
-                # print(f"det = {det}")
+
         return det
+    
+    
+    def superdiegonolise(self):
+        pass
 
 
 
 if __name__ == "__main__":
-    A = Z7_Matrix(3, [1, 2, 3], [4, 5, 6], [7, 8, 9])
-    A.elementary_transformation_1(1, 2)
-    B = A.copy()
-    B.transpose()
-    print(B)
-    print()
+    A = Z7_Matrix(3, [[1, 2, 3], [4, 5, 6], [7, 8, 1]])
     print(A)
+
