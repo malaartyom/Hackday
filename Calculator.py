@@ -111,13 +111,11 @@ class Z7_Matrix:
             for i in range(self.size):
                 mult *= self.value[i][(start + i) % self.size]
             det += mult
-
         for start in range(self.size):
             mult = Z7_num(1)
             for i in range(self.size):
                 mult *= self.value[self.size - 1 - i][(start + i) % self.size]
             det -= mult
-
         return det
     
     

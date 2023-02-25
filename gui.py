@@ -1,16 +1,30 @@
-import PySimpleGUI as sg
+import io
+import sys
+import os
+from typing import TextIO
+from pathlib import Path
+import math
+import re
+from Calculator import *
 
-layout = [[sg.Text("Hello from PySimpleGUI")], [sg.Button("OK")]]
+def calculate_expression(expr):
+    return Z7_num(eval(expr))
 
-# Create the window
-window = sg.Window("Demo", layout)
+def create_matrix()
 
-# Create an event loop
-while True:
-    event, values = window.read()
-    # End program if user closes window or
-    # presses the OK button
-    if event == "OK" or event == sg.WIN_CLOSED:
-        break
+def interface(string, out):
+    string = string.read()
+    a = string.split()
+    if a[0] == "calc":
+        print(calculate_expression("".join(a[1:])), file=out)
+    if a[0] == "exit":
+        exit(0)
+    if a[0] == "create" and a[1] == "matrix":
 
-window.close()
+
+if __name__ == "__main__":
+    print("$ ", end="")
+    for line in sys.stdin:
+        interface(io.StringIO(line), sys.stdout)
+        print("$ ", end="")
+
