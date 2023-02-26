@@ -63,14 +63,20 @@ class Z7_Matrix:
         self.size = num
         self.value = [[Z7_num(0) for i in range(num)] for j in range(num)]
         
-        if len(args) == 1:
-            args = args[0]
-
         if args:
-            for i in range(self.size):
-                for j in range(self.size):
-                    self.value[i][j] = Z7_num(args[i][j])
-    
+
+            if args[0] == 1:
+                for i in range(self.size):
+                    self.value[i][i] = Z7_num(1)
+            else:
+
+                if len(args) == 1:
+                    args = args[0]
+
+                for i in range(self.size):
+                    for j in range(self.size):
+                        self.value[i][j] = Z7_num(args[i][j])
+
 
     def __str__(self) -> str:
         return_string = ""
@@ -208,8 +214,8 @@ class Z7_Matrix:
 
 if __name__ == "__main__":
     A = Z7_Matrix(4, [[4, 4, 5, 0], [2, 0, 6, 6], [4, 1, 0, 2], [5, 3, 6, 6]])
-    C = Z7_Matrix(4, [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1])
-    A.transpose
+    C = Z7_Matrix(4, 1)
+    A.transpose()
     b = A.superdiegonolise()
     C.make_transformations(b)
     print(A)
