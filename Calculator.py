@@ -43,8 +43,11 @@ class Z7_num:
     def __int__(self):
         return self.value
     
-    def __cmp__(self, other):
-        return self.value - other.value
+    def __ge__(self, other):
+        return self.value >= other.value
+    
+    def __lt__(self, other):
+        return self.value < other.value
     
     def __eq__(self, other) -> bool:
         if type(other) is int:
@@ -76,6 +79,15 @@ class Z7_Matrix:
             return_string += "\n"
         return return_string[:-1]
 
+    def __mul__(self, other):
+        return_matrix = Z7_Matrix(self.size)
+        for i in range(self.size):
+            for j in range(self.size):
+                summ = Z7_num(0)
+                for k in range(self.size):
+                    summ += self.value[i][k] * other.value[k][j]
+                return_matrix.value[i][j] = summ
+        return return_matrix
 
     def copy(self):
         # This function make deep copy of matrix
@@ -85,6 +97,20 @@ class Z7_Matrix:
                 copied.value[i][j] = Z7_num(int(self.value[i][j]))
 
         return copied
+
+    
+    def sort_matrix(self):
+        temp = self.copy()
+        temp.value.sort(reverse=True)
+        
+        return_list = []
+        
+        for i in range(self.size):
+            for j in range(i, self.size):
+                if temp.value[i] == self.value[j]:
+                    self.elementary_transformation_1(i + 1, j + 1)
+                    return_list.append((1, (i + 1, j + 1)))
+        return return_list
 
 
     def elementary_transformation_3(self, first_line_number: int, const: Z7_num, second_line_number: int):
@@ -135,12 +161,43 @@ class Z7_Matrix:
     
     
     def superdiegonolise(self):
-        for i in range(0, self.size):
-            
+        return_list = []
+        
+        for index in range(self.size):
+            j = self.size
+
+            is_matching = True
+            for i in range(index):
+                    if self.value[0][i] != 0:
+                        is_matching = False
+
+            while (self.value[0][index] == 0 or not is_matching) and j > 1:
+                self.elementary_transformation_1(1, j)
+                return_list.append((1, (1, j)))
+                is_matching = True
+                for i in range(index):
+                    if self.value[0][i] != 0:
+                        is_matching = False
+                        break
+                j -= 1
+
+            num = self.value[0][index]
+
+            if num != 0:
+                for i in range(1, self.size):
+                    self.elementary_transformation_3(0 + 1, -(self.value[i][index] / num), i + 1)
+                    return_list.append((3, (1, int(-(self.value[i][index] / num)), i + 1)))
+                    
+        return_list += self.sort_matrix()
+        
+        self.sort_matrix()
+
+        return return_list
 
 
 if __name__ == "__main__":
-    A = Z7_Matrix(3, [[0, 0, 3], [0, 5, 6], [7, 8, 9]])
-    A.superdiegonolise()
+    A = Z7_Matrix(4, [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
+    b = A.superdiegonolise()
     print(A)
+    print(b)
 
