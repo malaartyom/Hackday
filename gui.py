@@ -20,6 +20,42 @@ def create_matrix_from_file(pathname):
 def interface(string, out):
     string = string.read()
     a = string.split()
+    if a[0] == "help":
+        # if a[1][5:] != "Russian":
+        #     print("If you want to read manual on other language enter:' help lang=perferable language' ")
+        #     print("Basic language is English")
+        #     print("There are two avalible language optinos: English and Russian")
+        # else:
+        #     print("Если вы хотите читать документацию на другогм языке введите: 'help lang=препдпочтит'")
+        s = "To read a matrix from a file and store it in a variable M enter: create matrix file=[pathname] as [M]"
+        print(len(s) * "-")
+        print("To calculate some expressions into Z7 field use command 'calc [some expression]'")
+        print("For example:")
+        print("calc 2 * 5")
+        print("3")
+        print(len(s) * "-")
+        print("To exit programm enter: exit")
+        print(len(s) * "-")
+        print(s)
+        print("Where pathname is the name of the path to the file")
+        print(len(s) * "-")
+        print("To print a matrix enter: print [M]")
+        print("Where M is the variable in which the matrix is written")
+        print(len(s) * "-")
+        print("To calculate determinant of the matrix enter: det [M]")
+        print("Where M is the variable in which the matrix is written")
+        print(len(s) * "-")
+        print("To transpose matrix use comand: transpose M")
+        print("Where M is the variable in which the matrix is written")
+        print(len(s) * "-")
+        print("To make elementary transoformations of the first type of the matrix M enter:")
+        print("transform [M] 1 [line1] [line2]")
+        print("Where line1 and line2 are the lines that we want to swap")
+        print(len(s) * "-")
+        print("To make elementary transoformations of the third type of the matrix M enter:")
+        print("transform [M] 3 [line1][const][line2]")
+        print("If you want to add line1 multiplied by const to line2")
+        print(len(s) * "-")
     if a[0] == "calc":
         print(calculate_expression("".join(a[1:])), file=out)
     if a[0] == "exit":
