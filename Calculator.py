@@ -13,7 +13,9 @@ class Z7_num:
         return Z7_num(self.value + other.value)
 
     def __mul__(self, other):
-        return Z7_num(self.value * other.value)
+        if type(other) is Z7_num:
+            return Z7_num(self.value * other.value)
+        return Z7_num(self.value * other)
     
     def __div__(self, other):
         if other == 0:
@@ -185,8 +187,8 @@ class Z7_Matrix:
 
             if num != 0:
                 for i in range(1, self.size):
-                    self.elementary_transformation_3(0 + 1, -(self.value[i][index] / num), i + 1)
                     return_list.append((3, (1, int(-(self.value[i][index] / num)), i + 1)))
+                    self.elementary_transformation_3(0 + 1, -(self.value[i][index] / num), i + 1)
                     
         return_list += self.sort_matrix()
         
@@ -194,10 +196,23 @@ class Z7_Matrix:
 
         return return_list
 
+    
+    def make_transformations(self, transformations: list):
+        for transformation in transformations:
+            number, arguments = transformation
+            if number == 3:
+                self.elementary_transformation_3(arguments[0], arguments[1], arguments[2])
+            elif number == 1:
+                self.elementary_transformation_1(arguments[0], arguments[1])
+
 
 if __name__ == "__main__":
-    A = Z7_Matrix(4, [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
+    A = Z7_Matrix(4, [[4, 4, 5, 0], [2, 0, 6, 6], [4, 1, 0, 2], [5, 3, 6, 6]])
+    C = Z7_Matrix(4, [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1])
+    A.transpose
     b = A.superdiegonolise()
+    C.make_transformations(b)
     print(A)
     print(b)
+    print(C)
 
